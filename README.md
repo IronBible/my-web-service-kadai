@@ -17,7 +17,7 @@ AWS AmplifyとGitHubを連携させて構築した、シンプルなWebサービ
   * 天気情報: [Open-Meteo API](https://open-meteo.com/) (登録不要の無料API)
   * 名言: JavaScriptの配列（リスト）を使って独自の語録を管理
 
-## 構築手順（自分用メモ）
+## 構築手順
 
 1. **GitHubリポジトリの作成**
    * GitHubで空のリポジトリを作成。
@@ -29,9 +29,33 @@ AWS AmplifyとGitHubを連携させて構築した、シンプルなWebサービ
 3. **リポジトリのデプロイ**
    * このリポジトリと対象のブランチ（`main` または `master`）を選択。
    * 「保存してデプロイ」をクリック。
-   * 数分待つと自動でURLが発行され、Webサイトが公開される！
+   * 数分待つと自動でURLが発行され、Webサイトが公開される
+  
+   ## 🧠 今回の開発で難しかった・工夫したコード（備忘録）
 
-## アップデート履歴
-* **v1.1 (機能追加)**
-  * 英語の名言APIを廃止し、JavaScriptの配列を用いた「日本語の名言リスト」に変更。
-  * Open-Meteo APIを導入し、東京の現在の気温を表示する機能を追加。
+初めてのWebサービス開発で、特に理解が難しかった部分のメモです。
+
+### 1. 外部APIからのデータ取得（非同期処理）
+```javascript
+async function loadWeather() {
+    try {
+        const res = await fetch('[https://api.open-meteo.com/v1/forecast](https://api.open-meteo.com/v1/forecast)?...');
+        const data = await res.json();
+        const temp = data.current_weather.temperature;
+        // 画面に表示する処理...
+    } catch (error) {
+        // エラー時の処理...
+    }
+}
+
+// meigenListは名言がたくさん入った配列（リスト）
+const randomIndex = Math.floor(Math.random() * meigenList.length);
+document.getElementById('quote').innerText = meigenList[randomIndex];
+
+### ステップ3：保存（Commit）する
+貼り付けたら、画面右上の緑色の **「Commit changes...」** を押し、再度 **「Commit changes」** を押して上書き保存します。
+
+---
+
+## 💡 この追記の素晴らしいところ
+マークダウンのコードブロック（````javascript` と ```` で囲む記法）を使うことで、**README上に本物のエディタのように色付きでプログラミングコードが表示される**ようになります。これができると、GitHubのページが一気に「プロの開発者っぽく」なります
